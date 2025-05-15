@@ -124,8 +124,8 @@ class Auth {
             }
 
             if (!success) {
-                console.log(`\n❌ FAILED RETRIEVEING TOKEN FOR ${signer.address}. RETRYING`)
-                await new Promise(resolve => setTimeout(resolve, 1000))
+                console.log(`❌ FAILED RETRIEVEING TOKEN FOR ${signer.address}. RETRYING`)
+                await new Promise(resolve => setTimeout(resolve, 10000))
             }
         }
     }

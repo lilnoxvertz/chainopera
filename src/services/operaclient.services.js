@@ -118,6 +118,7 @@ class OperaClient {
         const url = "https://chat.chainopera.ai/api/agent/ai-terminal-check-in"
 
         const agent = new HttpsProxyAgent(proxy)
+        const user = new ethers.Wallet(address)
 
         const header = {
             'Accept': '*/*',
@@ -158,7 +159,7 @@ class OperaClient {
             parentPort.postMessage({
                 type: "success",
                 data: {
-                    address: address,
+                    address: user.address,
                     checkIn: result?.checkIn
                 }
             })
