@@ -6,7 +6,7 @@
    ```
 
 3. fill up wallet.txt
-4. fill up proxy.txt if u have one
+4. fill up proxy.txt if u have one, format should be either ip:port:username:password or ip:port
 5. fill up groq api key on .env if u have one
 
 ## FEATURES
