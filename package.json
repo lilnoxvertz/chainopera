@@ -1,0 +1,23 @@
+{
+  "name": "chainopera",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "x",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "generate": "NODE_NO_WARNINGS=1 node ./src/main/generate.wallet.js",
+    "interact": "node ./src/main/ai.interaction.js",
+    "point": "node ./src/main/get.points.js",
+    "cekin": "node ./src/main/checkin.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "ethers": "^6.13.7",
+    "groq-sdk": "^0.21.0",
+    "https-proxy-agent": "^7.0.6",
+    "punycode": "^2.3.1"
+  }
+}
