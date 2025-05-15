@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "generate": "NODE_NO_WARNINGS=1 node ./src/main/generate.wallet.js",
+    "generate": "node ./src/main/generate.wallet.js",
     "interact": "node ./src/main/ai.interaction.js",
     "point": "node ./src/main/get.points.js",
     "cekin": "node ./src/main/checkin.js",
