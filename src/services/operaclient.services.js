@@ -43,7 +43,7 @@ class OperaClient {
         const { wallet, apiKey, userId, token, proxy } = workerData
         const url = `https://chat.chainopera.ai/api/agentopera`
 
-        const agent = new HttpsProxyAgent(proxy)
+        const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
 
         const user = new ethers.Wallet(wallet)
 
@@ -117,7 +117,7 @@ class OperaClient {
         const { token, address, proxy } = workerData
         const url = "https://chat.chainopera.ai/api/agent/ai-terminal-check-in"
 
-        const agent = new HttpsProxyAgent(proxy)
+        const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
         const user = new ethers.Wallet(address)
 
         const header = {
@@ -175,7 +175,7 @@ class OperaClient {
         const { address, token, proxy } = workerData
         const url = "https://chat.chainopera.ai/userCenter/api/v1/ai/terminal/getPoints"
 
-        const agent = new HttpsProxyAgent(proxy)
+        const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
 
         const user = new ethers.Wallet(address)
 

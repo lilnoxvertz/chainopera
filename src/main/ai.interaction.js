@@ -24,7 +24,7 @@ async function loadWallet() {
         while (isRunning) {
             console.clear()
             console.log(`[CYCLE ${cycle}]`)
-            if (cycle === 1) {
+            if (cycle === 10) {
                 console.log("reached 10 cycles.. stopping bot..")
                 process.exit(1)
             }

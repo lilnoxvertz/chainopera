@@ -28,12 +28,12 @@ class Auth {
         return finalCookie
     }
 
-    static async getMessage(walletAddress, cookie, agent) {
+    static async getMessage(walletAddress, cookie, proxy) {
         const url = "https://chat.chainopera.ai/userCenter/api/v1/wallet/getSIWEMessage-v1"
         const payload = {
             address: walletAddress
         }
-
+        const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
         const header = {
             ...headers,
             "Cookie": cookie
@@ -63,7 +63,7 @@ class Auth {
         let status = "FAILURE"
 
         const { wallet, proxy } = workerData
-        const agent = new HttpsProxyAgent(proxy)
+        const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
 
         const signer = new ethers.Wallet(wallet)
         const cookie = await this.generateCookie()
@@ -72,7 +72,7 @@ class Auth {
             let success = false
             try {
                 console.log("PROCESSING", signer.address, proxy)
-                const messageData = await this.getMessage(signer.address, cookie, agent)
+                const messageData = await this.getMessage(signer.address, cookie, proxy)
                 const signature = await signer.signMessage(messageData.siweMessage)
 
                 const url = "https://chat.chainopera.ai/userCenter/api/v1/client/user/login"
