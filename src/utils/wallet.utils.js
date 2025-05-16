@@ -17,13 +17,6 @@ class Wallet {
             .filter(line => line.trim())
             .map(line => line.split(",")[0])
     }
-
-    static async loadToken() {
-        return fs.readFileSync("wallet.txt", "utf-8")
-            .split("\n")
-            .filter(line => line.trim())
-            .map(line => line.split(",")[2])
-    }
 }
 
 module.exports = Wallet
