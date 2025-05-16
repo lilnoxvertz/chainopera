@@ -138,36 +138,40 @@ class OperaClient {
             'Authorization': token
         }
 
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: header,
-                agent
-            })
+        let success = false
+        let attempt = 0
+        let maxAttempt = 10
 
-            const result = await response.json()
+        while (success === false && attempt < maxAttempt) {
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: header,
+                    agent
+                })
 
-            if (!response.ok) {
+                const result = await response.json()
+
+                if (!response.ok) {
+                    console.log(`${user.address} FAILED DOING CHECKIN! RETRYING`)
+                    await new Promise(resolve => setTimeout(resolve, 5000)
+                    continue
+                }
+
+                success = true
                 parentPort.postMessage({
-                    type: "failed",
+                    type: "success",
                     data: {
-                        message: response.message
+                        address: user.address,
+                        checkIn: result?.checkIn
                     }
                 })
+            } catch (error) {
+                parentPort.postMessage({
+                    type: "error",
+                    data: error
+                })
             }
-
-            parentPort.postMessage({
-                type: "success",
-                data: {
-                    address: user.address,
-                    checkIn: result?.checkIn
-                }
-            })
-        } catch (error) {
-            parentPort.postMessage({
-                type: "error",
-                data: error
-            })
         }
     }
 
