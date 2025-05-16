@@ -154,7 +154,7 @@ class OperaClient {
 
                 if (!response.ok) {
                     console.log(`${user.address} FAILED DOING CHECKIN! RETRYING`)
-                    await new Promise(resolve => setTimeout(resolve, 5000)
+                    await new Promise(resolve => setTimeout(resolve, 5000))
                     continue
                 }
 
