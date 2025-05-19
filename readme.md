@@ -8,6 +8,7 @@
 3. fill up wallet.txt with your private key
 4. fill up proxy.txt if u have one, format should be either ip:port:username:password or ip:port
 5. fill up groq api key on .env if u have one
+6. go to config/config.js and change the interactionMaxCycle with the amount of cycle that u want
 
 ## FEATURES
 
