@@ -76,7 +76,12 @@ class Workers {
 
             worker.on("message", (message) => {
                 if (message.type === "done") {
-                    console.log(`✅ ${message.data.address} success`)
+                    console.log(message.data)
+                    resolve()
+                }
+
+                if (message.type === "success") {
+                    console.log(`✅ ${message.data.address} SUCCESSFULLY INTERACTING WITH AI`)
                     resolve()
                 }
 

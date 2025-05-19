@@ -3,6 +3,7 @@ const Wallet = require("../utils/wallet.utils")
 const Workers = require("../worker/worker")
 
 async function loadWallet() {
+    let maxWorker = 5
     try {
         console.clear()
 
@@ -14,17 +15,22 @@ async function loadWallet() {
             process.exit(1)
         }
 
+        if (proxyArr.length === 0) {
+            console.log("no proxy found, using current ip")
+            maxWorker = 2
+        }
+
         const loginTask = []
         const authDataArr = []
         const checkInTask = []
 
-        console.log("[STARTING LOGIN WORKERS]\n")
+        console.log("[STARTING LOGIN WORKERS]")
         for (let i = 0; i < walletArr.length; i++) {
             const proxy = proxyArr.length === 0 ? "" : proxyArr[i % proxyArr.length]
             loginTask.push(() => Workers.authWorker(walletArr[i], proxy))
         }
 
-        const data = await Workers.limitTasks(loginTask, 5)
+        const data = await Workers.limitTasks(loginTask, maxWorker)
 
         walletArr.forEach((address, index) => {
             authDataArr.push({
@@ -33,13 +39,15 @@ async function loadWallet() {
             })
         })
 
-        console.log("\n[STARTING CHECKIN WORKERS]\n")
+        console.log("\n[STARTING CHECKIN WORKERS]")
         for (let j = 0; j < authDataArr.length; j++) {
             const proxy = proxyArr.length === 0 ? "" : proxyArr[j % proxyArr.length]
             checkInTask.push(() => Workers.checkInWorker(authDataArr[j].address, authDataArr[j].token, proxy))
         }
 
-        await Workers.limitTasks(checkInTask, 5)
+
+        const a = await Workers.limitTasks(checkInTask, maxWorker)
+        console.log(a)
     } catch (error) {
         console.error(error)
     }

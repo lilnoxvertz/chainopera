@@ -31,4 +31,6 @@ const chatHeaders = {
     'x-terminal-source': '2'
 }
 
-module.exports = { headers, chatHeaders }
+const interactionMaxCycle = 2 // change this with how much cycle u prefer
+
+module.exports = { headers, chatHeaders, interactionMaxCycle }

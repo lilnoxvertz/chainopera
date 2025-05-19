@@ -3,6 +3,7 @@ const Wallet = require("../utils/wallet.utils")
 const Workers = require("../worker/worker")
 
 async function loadWallet() {
+    let maxWorker = 5
     try {
         console.clear()
 
@@ -12,6 +13,11 @@ async function loadWallet() {
         if (walletArr.length === 0) {
             console.log("no private key found!")
             process.exit(1)
+        }
+
+        if (proxyArr.length === 0) {
+            console.log("no proxy found. using current ip")
+            maxWorker = 2
         }
 
         const loginTask = []
@@ -24,7 +30,7 @@ async function loadWallet() {
             loginTask.push(() => Workers.authWorker(walletArr[i], proxy))
         }
 
-        const data = await Workers.limitTasks(loginTask, 5)
+        const data = await Workers.limitTasks(loginTask, maxWorker)
 
         walletArr.forEach((address, index) => {
             authDataArr.push({
@@ -39,7 +45,7 @@ async function loadWallet() {
             checkInTask.push(() => Workers.pointWorker(authDataArr[j].address, authDataArr[j].token, proxy))
         }
 
-        await Workers.limitTasks(checkInTask, 5)
+        await Workers.limitTasks(checkInTask, maxWorker)
     } catch (error) {
         console.error(error)
     }
