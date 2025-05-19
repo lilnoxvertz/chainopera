@@ -81,7 +81,6 @@ class OperaClient {
                 })
 
                 const result = await response.text()
-                console.log(result)
 
                 const message = await Helper.extractText(result)
 
