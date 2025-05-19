@@ -46,8 +46,7 @@ async function loadWallet() {
         }
 
 
-        const a = await Workers.limitTasks(checkInTask, maxWorker)
-        console.log(a)
+        await Workers.limitTasks(checkInTask, maxWorker)
     } catch (error) {
         console.error(error)
     }
