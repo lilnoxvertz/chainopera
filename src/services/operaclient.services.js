@@ -87,7 +87,7 @@ class OperaClient {
                 if (!response.ok || message === "") {
                     success = false
                     console.log(`❌ ${user.address} FAILED INTERACTING WITH AI. RETRYING`)
-                    await new Promise(resolve => setTimeout(resolve, 20000))
+                    await new Promise(resolve => setTimeout(resolve, 30000))
                     continue
                 }
 
@@ -98,7 +98,7 @@ class OperaClient {
                     }
                 })
 
-                await delay(15000, 20000)
+                await delay(20000, 30000)
             } catch (error) {
                 parentPort.postMessage({
                     type: "error",
