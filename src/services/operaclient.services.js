@@ -35,8 +35,8 @@ class OperaClient {
         const user = new ethers.Wallet(wallet)
 
         let success = false
-        let cycle = 1
-        let maxCycle = 2
+        let cycle = 0
+        let maxCycle = interactionMaxCycle
 
         while (cycle <= maxCycle) {
             const chatId = await Helper.generateRandomId()
@@ -81,7 +81,6 @@ class OperaClient {
                 })
 
                 const result = await response.text()
-                console.log(result)
 
                 const message = await Helper.extractText(result)
 
@@ -107,11 +106,12 @@ class OperaClient {
                 })
             }
             cycle++
+            console.log(`🟢 ${user.address} FINISHED ${cycle} CYCLE`)
         }
 
         parentPort.postMessage({
             type: "done",
-            data: `✅ ${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`
+            data: `🟢 ${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`
         })
     }
 
@@ -139,7 +139,7 @@ class OperaClient {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
                         'x-terminal-source': '2',
                         "Cookie": `${token}`,
-                        "Next-Action": "70a0e4a8a431851319e88114e586b28778701caaee"
+                        "Next-Action": "7069bc002836000e52e923ba75102f320554b6e93e"
                     },
                     body: JSON.stringify([
                         "hi",
