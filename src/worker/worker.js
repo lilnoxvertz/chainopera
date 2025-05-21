@@ -44,7 +44,7 @@ class Workers {
             worker.on("message", (message) => {
                 if (message.type === "success") {
                     console.log(`[${message.data.address}]`)
-                    console.log(`✅ CheckIn : ${message.data?.checkIn === true ? "done" : message.data?.checkIn}\n`)
+                    console.log(`✅ ${message.data.checkIn}\n`)
                     resolve()
                 }
 

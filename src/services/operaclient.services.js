@@ -224,11 +224,22 @@ class OperaClient {
                 }
 
                 success = true
+                if (!result.checkIn) {
+                    parentPort.postMessage({
+                        type: "success",
+                        data: {
+                            address: user.address,
+                            checkIn: `${address} ALREADY CHECKING IN TODAY`
+                        }
+                    })
+                    return
+                }
+
                 parentPort.postMessage({
                     type: "success",
                     data: {
                         address: user.address,
-                        checkIn: result?.checkIn
+                        checkIn: `${address} SUCCESSFULLY CHECKING IN`
                     }
                 })
             } catch (error) {
