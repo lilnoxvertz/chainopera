@@ -229,7 +229,7 @@ class OperaClient {
                         type: "success",
                         data: {
                             address: user.address,
-                            checkIn: `${address} ALREADY CHECKING IN TODAY`
+                            checkIn: `ALREADY CHECKING IN TODAY`
                         }
                     })
                     return
