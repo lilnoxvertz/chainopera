@@ -5,6 +5,8 @@ const GroqClient = require("../config/groq")
 const { ethers } = require("ethers")
 const Helper = require("./helper/helper")
 const delay = require("../utils/delay")
+const chalk = require("chalk")
+const { timestamp } = require("../utils/timestamp")
 require("dotenv").config()
 
 class OperaClient {
@@ -24,7 +26,7 @@ class OperaClient {
             "What is a crypto wallet and how does it work?",
             "How do NFTs (non-fungible tokens) function on the blockchain?",
             "What risks are associated with investing in cryptocurrencies?",
-            "How does a decentralized exchange (DEX) work compared to a centralized one?",
+            "How does a decentralized exchange (DEX) work comparedBright to a centralized one?",
             "What is blockchain scalability and why is it a concern?",
             "How are new cryptocurrencies created and launched?",
             "What is a 51% attack and how can it impact a blockchain network?"
@@ -34,7 +36,6 @@ class OperaClient {
         const agent = proxy ? new HttpsProxyAgent(proxy) : undefined
         const user = new ethers.Wallet(wallet)
 
-        let success = false
         let cycle = 0
         let maxCycle = interactionMaxCycle
 
@@ -81,12 +82,10 @@ class OperaClient {
                 })
 
                 const result = await response.text()
-
                 const message = await Helper.extractText(result)
 
                 if (!response.ok || message === "") {
-                    success = false
-                    console.log(`❌ ${user.address} FAILED INTERACTING WITH AI. RETRYING`)
+                    console.log(`${timestamp()} ${chalk.redBright(`${user.address} FAILED INTERACTING WITH AI. RETRYING`)}`)
                     await new Promise(resolve => setTimeout(resolve, 30000))
                     continue
                 }
@@ -106,12 +105,12 @@ class OperaClient {
                 })
             }
             cycle++
-            console.log(`🟢 ${user.address} FINISHED ${cycle} CYCLE`)
+            console.log(`${timestamp()} ${chalk.greenBright(`${user.address} FINISHED ${cycle} CYCLE`)}`)
         }
 
         parentPort.postMessage({
             type: "done",
-            data: `🟢 ${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`
+            data: `${chalk.greenBright(`${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`)}`
         })
     }
 
@@ -149,7 +148,7 @@ class OperaClient {
                 })
 
                 if (!response.ok) {
-                    console.log(`❌ ${address} FAILED GETTING POW CHALLENGE DATA`)
+                    console.log(`${timestamp()} ${chalk.redBright(`${address} FAILED GETTING POW CHALLENGE DATA`)}`)
                     await new Promise(resolve => setTimeout(resolve, 10000))
                     continue
                 }
@@ -159,11 +158,11 @@ class OperaClient {
                 const parsedResult = await Helper.parseResponse(result)
                 const prompt = parsedResult.prompt
                 const salt = parsedResult.salt
-                const timestamp = parsedResult.timestamp
+                const timestamps = parsedResult.timestamp
 
                 const id = parsedResult.challenge_id
                 const diff = parsedResult.difficulty
-                const nonce = await Helper.getNonce(prompt, salt, timestamp, diff)
+                const nonce = await Helper.getNonce(prompt, salt, timestamps, diff)
 
                 success = true
                 return {
@@ -218,7 +217,7 @@ class OperaClient {
                 const result = await response.json()
 
                 if (!response.ok) {
-                    console.log(`${user.address} FAILED DOING CHECKIN! RETRYING`)
+                    console.log(`${timestamp()} ${chalk.redBright(`${user.address} FAILED DOING CHECKIN! RETRYING`)}`)
                     await new Promise(resolve => setTimeout(resolve, 40000))
                     continue
                 }
@@ -228,8 +227,7 @@ class OperaClient {
                     parentPort.postMessage({
                         type: "success",
                         data: {
-                            address: user.address,
-                            checkIn: `${user.address} ALREADY CHECKING IN TODAY`
+                            checkIn: `${chalk.greenBright(`${user.address} ALREADY CHECKING IN TODAY`)}`
                         }
                     })
                     return
@@ -238,14 +236,13 @@ class OperaClient {
                 parentPort.postMessage({
                     type: "success",
                     data: {
-                        address: user.address,
-                        checkIn: `${user.address} SUCCESSFULLY CHECKING IN`
+                        checkIn: `${chalk.greenBright(`${user.address} SUCCESSFULLY CHECKING IN`)}`
                     }
                 })
             } catch (error) {
                 parentPort.postMessage({
                     type: "error",
-                    data: error
+                    data: `${chalk.redBright(error)}`
                 })
             }
         }

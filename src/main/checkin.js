@@ -3,7 +3,7 @@ const Wallet = require("../utils/wallet.utils")
 const Workers = require("../worker/worker")
 
 async function loadWallet() {
-    let maxWorker = 5
+    let maxWorker = 10
     try {
         console.clear()
 

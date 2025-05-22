@@ -2,6 +2,8 @@ const { ethers } = require("ethers")
 const { headers } = require("../config/config")
 const { parentPort, workerData } = require("worker_threads")
 const { HttpsProxyAgent } = require("https-proxy-agent")
+const chalk = require("chalk")
+const { timestamp } = require("../utils/timestamp")
 
 class Auth {
     static async generateCookie() {
@@ -124,7 +126,7 @@ class Auth {
             }
 
             if (!success) {
-                console.log(`❌ FAILED RETRIEVEING TOKEN FOR ${signer.address}. RETRYING`)
+                console.log(chalk.redBright(`${timestamp()} FAILED RETRIEVEING TOKEN FOR ${signer.address}. RETRYING`))
                 await new Promise(resolve => setTimeout(resolve, 40000))
             }
         }

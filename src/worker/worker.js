@@ -1,5 +1,7 @@
 const { Worker } = require("worker_threads")
 const path = require("path")
+const { timestamp } = require("../utils/timestamp")
+const chalk = require("chalk")
 
 class Workers {
     static async authWorker(wallet, proxy) {
@@ -43,8 +45,7 @@ class Workers {
 
             worker.on("message", (message) => {
                 if (message.type === "success") {
-                    console.log(`[${message.data.address}]`)
-                    console.log(`✅ ${message.data.checkIn}\n`)
+                    console.log(`${timestamp()} ${message.data.checkIn}`)
                     resolve()
                 }
 
@@ -76,17 +77,16 @@ class Workers {
 
             worker.on("message", (message) => {
                 if (message.type === "done") {
-                    console.log(message.data)
+                    console.log(`${timestamp()} ${message.data}`)
                     resolve()
                 }
 
                 if (message.type === "success") {
-                    console.log(`✅ ${message.data.address} SUCCESSFULLY INTERACTING WITH AI`)
+                    console.log(`${timestamp()} ${chalk.greenBright(`${message.data.address} SUCCESSFULLY INTERACTING WITH AI`)}`)
                     resolve()
                 }
 
                 if (message.type === "error") {
-                    console.error("worker error:", message.data)
                     reject(new Error(message.data))
                 }
             })
@@ -112,14 +112,14 @@ class Workers {
 
             worker.on("message", (message) => {
                 if (message.type === "success") {
-                    console.log(`[${message.data.address}]`)
-                    console.log(`🪙 Today Points : ${message.data.point.todayPoint}`)
-                    console.log(`🪙 Total Points : ${message.data.point.totalPoint}\n`)
+                    console.log(`${timestamp()} [${message.data.address}]`)
+                    console.log(chalk.yellow(`🪙 Today Points : ${message.data.point.todayPoint}`))
+                    console.log(chalk.yellow(`🪙 Total Points : ${message.data.point.totalPoint}\n`))
                     resolve()
                 }
 
                 if (message.type === "error") {
-                    reject(new Error(message.data))
+                    reject(new Error(`${timestamp()} ${message.data}`))
                 }
             })
 

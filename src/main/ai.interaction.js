@@ -3,7 +3,7 @@ const Workers = require("../worker/worker");
 const Proxy = require("../utils/proxy.utils");
 
 async function loadWallet() {
-    let maxWorker = 5
+    let maxWorker = 10
 
     const walletArr = await Wallet.load()
     const proxyArr = await Proxy.load()
@@ -57,7 +57,8 @@ async function loadWallet() {
         }
 
         console.log("\n[STARTING INTERACTION TASK]")
-        await Workers.limitTasks(interactionTask, maxWorker)
+        const a = await Workers.limitTasks(interactionTask, maxWorker)
+        console.log(a)
     } catch (error) {
         console.error(error)
     }
