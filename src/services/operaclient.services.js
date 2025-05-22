@@ -105,7 +105,7 @@ class OperaClient {
                 })
             }
             cycle++
-            console.log(`${timestamp()} ${chalk.greenBright(`${user.address} FINISHED ${cycle} CYCLE`)}`)
+            console.log(`${timestamp()} ${chalk.yellowBright(`${user.address} FINISHED ${cycle} CYCLE`)}`)
         }
 
         parentPort.postMessage({
