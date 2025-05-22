@@ -229,7 +229,7 @@ class OperaClient {
                         type: "success",
                         data: {
                             address: user.address,
-                            checkIn: `${address} ALREADY CHECKING IN TODAY`
+                            checkIn: `${user.address} ALREADY CHECKING IN TODAY`
                         }
                     })
                     return
@@ -239,7 +239,7 @@ class OperaClient {
                     type: "success",
                     data: {
                         address: user.address,
-                        checkIn: `${address} SUCCESSFULLY CHECKING IN`
+                        checkIn: `${user.address} SUCCESSFULLY CHECKING IN`
                     }
                 })
             } catch (error) {
