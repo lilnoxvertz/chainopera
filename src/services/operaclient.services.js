@@ -138,7 +138,7 @@ class OperaClient {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
                         'x-terminal-source': '2',
                         "Cookie": `${token}`,
-                        "Next-Action": "7069bc002836000e52e923ba75102f320554b6e93e"
+                        "Next-Action": "7044d9cab0348d61259a63276b5c3ff876048c2328"
                     },
                     body: JSON.stringify([
                         "hi",
