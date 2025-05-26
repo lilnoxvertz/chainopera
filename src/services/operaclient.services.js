@@ -105,12 +105,12 @@ class OperaClient {
                 })
             }
             cycle++
-            console.log(`${timestamp()} ${chalk.greenBright(`${user.address} FINISHED ${cycle} CYCLE`)}`)
+            console.log(`${timestamp()} ${chalk.yellowBright(`${user.address} FINISHED ${cycle} CYCLE`)}`)
         }
 
         parentPort.postMessage({
             type: "done",
-            data: `${chalk.greenBright(`${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`)}`
+            data: `${chalk.yellowBright(`${user.address} SUCCESSFULLY COMPLETED ${cycle} CYCLE`)}`
         })
     }
 
@@ -138,7 +138,7 @@ class OperaClient {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
                         'x-terminal-source': '2',
                         "Cookie": `${token}`,
-                        "Next-Action": "7069bc002836000e52e923ba75102f320554b6e93e"
+                        "Next-Action": "70da4877ff6a65f715aec9b31fedb362ba46e3ff17"
                     },
                     body: JSON.stringify([
                         "hi",
